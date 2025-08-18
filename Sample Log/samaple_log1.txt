@@ -1,3 +1,9 @@
 2025-08-18 10:22:01 INFO User login successful
 2025-08-18 10:22:05 ERROR Failed to connect to database
 2025-08-18 10:22:15 WARNING Low disk space
+2025-08-18 10:22:17 WARNING Low disk space
+2025-08-18 10:22:18 WARNING Low disk space
+2025-08-18 10:22:19 WARNING Low disk space
+2025-08-18 10:22:20 ERROR Failed to connect to database
+2025-08-18 10:22:30 INFO User add new table
+2025-08-18 10:22:40 INFO User logout successful
