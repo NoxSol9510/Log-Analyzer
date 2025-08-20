@@ -28,7 +28,20 @@ while True:
             print("Error reading log")
     
     elif choice == '2':
-        print("Test 2")
+        path = file_path()
+        keyword = input("Enter search keyword: ")
+
+        if keyword is not None:
+            total_match, list_match = log_search(path, keyword)
+
+        else:
+            print("Returning to Main menu")
+
+        print("--- Keyword Search Report ---")
+        print(f"Total match: {total_match}")
+
+        for item in list_match:
+            print(item)
     
     elif choice == '0':
         print("Exiting the program.")
