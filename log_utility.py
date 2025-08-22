@@ -42,4 +42,29 @@ def log_search(path, keyword):
         return None, []
 
     return count_match, list_match
-    
+
+def log_export(path, out_file):
+    total, info, error, warning = log_analysis(path)
+
+    while True:
+        file_name = input("Enter a file name: ")
+        if file_name is not None:
+            if out_file == 1:
+                with open(file_name + ".txt", "a") as f:
+                    f.write(f"Total Log: {total}\n")
+                    f.write(f"Info: {info}\n")
+                    f.write(f"Error: {error}\n")
+                    f.write(f"Warning: {warning}\n")
+                    break
+            
+            elif out_file == 2:
+                with open(file_name + ".csv", "a") as f: 
+                    f.write("Level, Count\n")
+                    f.write(f"Total Log, {total}\n")
+                    f.write(f"Info, {info}\n")
+                    f.write(f"Error, {error}\n")
+                    f.write(f"Warning, {warning}\n")
+                    break
+        
+        else:
+            print("Invalid input")
