@@ -1,4 +1,6 @@
 #log level count
+import os 
+
 def log_analysis(path):
     count_info = 0
     count_error = 0
@@ -43,28 +45,32 @@ def log_search(path, keyword):
 
     return count_match, list_match
 
+def log_exist(path):
+    if os.path.exists(path):
+        print("Log finish export")
+    else:
+        print("Error while exporting")
+
 def log_export(path, out_file):
     total, info, error, warning = log_analysis(path)
 
-    while True:
-        file_name = input("Enter a file name: ")
-        if file_name is not None:
-            if out_file == 1:
-                with open(file_name + ".txt", "a") as f:
-                    f.write(f"Total Log: {total}\n")
-                    f.write(f"Info: {info}\n")
-                    f.write(f"Error: {error}\n")
-                    f.write(f"Warning: {warning}\n")
-                    break
+    file_name = input("Enter a file name: ")
+    if file_name == "":
+        file_name = "report"
             
-            elif out_file == 2:
-                with open(file_name + ".csv", "a") as f: 
-                    f.write("Level, Count\n")
-                    f.write(f"Total Log, {total}\n")
-                    f.write(f"Info, {info}\n")
-                    f.write(f"Error, {error}\n")
-                    f.write(f"Warning, {warning}\n")
-                    break
-        
-        else:
-            print("Invalid input")
+    if out_file == 1:
+        with open(file_name + ".txt", "a") as f:
+            f.write(f"Total Log: {total}\n")
+            f.write(f"Info: {info}\n")
+            f.write(f"Error: {error}\n")
+            f.write(f"Warning: {warning}\n")
+        log_exist(file_name + ".txt")
+            
+    elif out_file == 2:
+        with open(file_name + ".csv", "a") as f: 
+            f.write("Level, Count\n")
+            f.write(f"Total Log, {total}\n")
+            f.write(f"Info, {info}\n")
+            f.write(f"Error, {error}\n")
+            f.write(f"Warning, {warning}\n")
+        log_exist(file_name + ".csv")
