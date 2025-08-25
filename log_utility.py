@@ -74,3 +74,15 @@ def log_export(path, out_file):
             f.write(f"Error, {error}\n")
             f.write(f"Warning, {warning}\n")
         log_exist(file_name + ".csv")
+
+def log_search_export(list, file_name):
+    if file_name == "":
+        file_name = "report.txt"
+    else:
+        file_name = file_name + ".txt"
+    
+    with open(file_name, "a") as f:
+        for item in list:
+            f.write(item)
+
+    log_exist(file_name)

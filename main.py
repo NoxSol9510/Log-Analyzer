@@ -43,6 +43,11 @@ while True:
 
         for item in list_match:
             print(item)
+        
+        if input("Do you want to export these results? (y/n):"):
+            file_name = input("Enter a file name: ")
+            log_search_export(list_match,file_name)
+        
     
     elif choice == '3':
         path = file_path()
