@@ -1,5 +1,25 @@
 #log level count
 import os 
+from formatter import *
+
+def file_type():
+    print("1. Text")
+    print("2. CSV")
+    print("3. JSON")
+    print("0. Cancel")
+
+    while True:
+        choice = input("Choose file type: ")
+        if choice == '1':
+            return ".txt"
+        elif choice == '2':
+            return ".csv"
+        elif choice == '3':
+            return ".json"
+        elif choice == '0':
+            return "cancel"
+        else:
+            print("Invalid input")
 
 def log_analysis(path):
     count_info = 0
@@ -54,32 +74,27 @@ def log_exist(path):
 def log_export(path, out_file):
     total, info, error, warning = log_analysis(path)
 
-    file_name = input("Enter a file name: ")
-    if file_name == "":
-        file_name = "report"
+    file_name = input("Enter a file name: ") or "report"
             
     if out_file == 1:
-        with open(file_name + ".txt", "a") as f:
-            f.write(f"Total Log: {total}\n")
-            f.write(f"Info: {info}\n")
-            f.write(f"Error: {error}\n")
-            f.write(f"Warning: {warning}\n")
-        log_exist(file_name + ".txt")
+        file_name = format_txt(file_name, total, info, error, warning)
             
     elif out_file == 2:
-        with open(file_name + ".csv", "a") as f: 
-            f.write("Level, Count\n")
-            f.write(f"Total Log, {total}\n")
-            f.write(f"Info, {info}\n")
-            f.write(f"Error, {error}\n")
-            f.write(f"Warning, {warning}\n")
-        log_exist(file_name + ".csv")
+        file_name = format_csv(file_name, total, info, error, warning)
+    
+    elif out_file == 3:
+        file_name = format_json(file_name, total, info, error, warning)
+    
+    else:
+        print("Invalid export format")
+    
+    log_exist(file_name)
 
 def log_search_export(list, file_name):
+    choice = input("")
+
     if file_name == "":
-        file_name = "report.txt"
-    else:
-        file_name = file_name + ".txt"
+        file_name = "report"
     
     with open(file_name, "a") as f:
         for item in list:

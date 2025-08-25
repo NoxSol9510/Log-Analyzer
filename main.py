@@ -54,7 +54,8 @@ while True:
 
         print("1. txt")
         print("2. csv")
-        print("3. Cancel")
+        print("3. json")
+        print("0. Cancel")
 
         while True:
             file_type = input("Choose file type: ")
@@ -68,6 +69,10 @@ while True:
                 break
             
             elif file_type == '3':
+                log_export(path, 3)
+                break
+
+            elif file_type == '0':
                 break
 
             else:
