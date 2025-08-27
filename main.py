@@ -28,27 +28,30 @@ while True:
         
         else:
             print("Error reading log")
-    
+        
     # search file
     elif choice == '2':
         path = file_path()
-        keyword = input("Enter search keyword: ")
+        keyword = input("Enter search keyword: ").strip()
 
-        if keyword is not None:
+        if not keyword:  # empty input check
+            print("Returning to Main menu")
+        else:
             total_match, list_match = log_search(path, keyword)
 
-        else:
-            print("Returning to Main menu")
+            print("--- Keyword Search Report ---")
+            print(f"Total matches: {total_match}")
 
-        print("--- Keyword Search Report ---")
-        print(f"Total match: {total_match}")
+            for item in list_match:
+                print(item, end="")  # avoid double newlines
 
-        for item in list_match:
-            print(item)
-        
-        if input("Do you want to export these results? (y/n):"):
-            file_name = input("Enter a file name: ")
-            log_search_export(list_match,file_name)
+            if input("Do you want to export these results? (y/n): ").lower() == "y":
+                file_ext = file_type()
+                if file_ext:  # user didn't cancel
+                    file_name = input("Enter a file name: ") or "search_results"
+                    full_name = f"{file_name}.{file_ext}"
+                    log_search_export(list_match, full_name)
+
         
     # export file
     elif choice == '3':
