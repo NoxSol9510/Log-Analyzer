@@ -3,23 +3,19 @@ import os
 from formatter import *
 
 def file_type():
-    print("1. Text")
-    print("2. CSV")
-    print("3. JSON")
-    print("0. Cancel")
+    choices = {
+        "1": "txt",
+        "2": "csv",
+        "3": "json",
+        "0": None
+    }
 
     while True:
+        print("1. Text\n2. CSV\n3. JSON\n0. Cancel")
         choice = input("Choose file type: ")
-        if choice == '1':
-            return ".txt"
-        elif choice == '2':
-            return ".csv"
-        elif choice == '3':
-            return ".json"
-        elif choice == '0':
-            return "cancel"
-        else:
-            print("Invalid input")
+        if choice in choices:
+            return choices[choice]
+        print("Invalid input")
 
 def log_analysis(path):
     count_info = 0
@@ -71,33 +67,40 @@ def log_exist(path):
     else:
         print("Error while exporting")
 
-def log_export(path, out_file):
+def log_export(path, full_name):
     total, info, error, warning = log_analysis(path)
-
-    file_name = input("Enter a file name: ") or "report"
-            
-    if out_file == 1:
-        file_name = format_txt(file_name, total, info, error, warning)
-            
-    elif out_file == 2:
-        file_name = format_csv(file_name, total, info, error, warning)
     
-    elif out_file == 3:
-        file_name = format_json(file_name, total, info, error, warning)
-    
+    if full_name.endswith(".txt"):
+        file_name = format_txt(full_name, total, info, error, warning)
+    elif full_name.endswith(".csv"):
+        file_name = format_csv(full_name, total, info, error, warning)
+    elif full_name.endswith(".json"):
+        file_name = format_json(full_name, total, info, error, warning)
     else:
         print("Invalid export format")
+        return
     
     log_exist(file_name)
 
-def log_search_export(list, file_name):
-    choice = input("")
+def log_search_export(results, full_name):
+    if full_name.endswith(".txt"):
+        with open(full_name, "w") as f:
+            for line in results:
+                f.write(line)
+        log_exist(full_name)
 
-    if file_name == "":
-        file_name = "report"
-    
-    with open(file_name, "a") as f:
-        for item in list:
-            f.write(item)
+    elif full_name.endswith(".csv"):
+        with open(full_name, "w") as f:
+            f.write("Matched Lines\n")
+            for line in results:
+                f.write(f"\"{line.strip()}\"\n")
+        log_exist(full_name)
 
-    log_exist(file_name)
+    elif full_name.endswith(".json"):
+        import json
+        with open(full_name, "w") as f:
+            json.dump(results, f, indent=4)
+        log_exist(full_name)
+
+    else:
+        print("Invalid export format")
