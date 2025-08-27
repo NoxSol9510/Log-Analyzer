@@ -14,6 +14,7 @@ while True:
 
     choice = input("Enter your choice: ")
 
+    # basic log count
     if choice == '1':
         print("--- Log Analysis Report ---")
         path = file_path()
@@ -28,6 +29,7 @@ while True:
         else:
             print("Error reading log")
     
+    # search file
     elif choice == '2':
         path = file_path()
         keyword = input("Enter search keyword: ")
@@ -48,35 +50,17 @@ while True:
             file_name = input("Enter a file name: ")
             log_search_export(list_match,file_name)
         
-    
+    # export file
     elif choice == '3':
         path = file_path()
 
-        print("1. txt")
-        print("2. csv")
-        print("3. json")
-        print("0. Cancel")
-
-        while True:
-            file_type = input("Choose file type: ")
-
-            if file_type == '1':
-                log_export(path, 1)
-                break
-            
-            elif file_type == '2':
-                log_export(path, 2)
-                break
-            
-            elif file_type == '3':
-                log_export(path, 3)
-                break
-
-            elif file_type == '0':
-                break
-
-            else:
-                print("Invalid input")
+        file_ext = file_type()
+        if not file_ext:
+            print("Export canceled.")
+        else:
+            file_name = input("Enter file name: ") or "report"
+            full_name = f"{file_name}.{file_ext}"  
+            log_export(path, full_name) 
 
     elif choice == '0':
         print("Exiting the program.")
