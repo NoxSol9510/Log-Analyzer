@@ -67,40 +67,42 @@ def log_exist(path):
     else:
         print("Error while exporting")
 
-def log_export(path, full_name):
-    total, info, error, warning = log_analysis(path)
+def log_export(data, name):
+    # log count export
+    if isinstance(data, dict):
+        if name.endswith(".txt"):
+            name = format_txt(name, data["Total Log"], data["Info"], data["Error"], data["Warning"])
+        elif name.endswith(".csv"):
+            name = format_csv(name, data["Total Log"], data["Info"], data["Error"], data["Warning"])
+        elif name.endswith(".json"):
+            name = format_json(name, data["Total Log"], data["Info"], data["Error"], data["Warning"])
+        else:
+            print("Invalid export format")
+            return
+
+    # search result export
+    elif isinstance(data, list):
+        if name.endswith(".txt"):
+            with open(name, "w") as f:
+                for line in data:
+                    f.write(line)
+
+        elif name.endswith(".csv"):
+            with open(name, "w") as f:
+                f.write("Matched Lines\n")
+                for line in data:
+                    f.write(f"\"{line.strip()}\"\n")
+
+        elif name.endswith(".json"):
+            import json
+            with open(name, "w") as f:
+                json.dump(data, f, indent=4)
+
+        else:
+            print("Invalid export format")
     
-    if full_name.endswith(".txt"):
-        file_name = format_txt(full_name, total, info, error, warning)
-    elif full_name.endswith(".csv"):
-        file_name = format_csv(full_name, total, info, error, warning)
-    elif full_name.endswith(".json"):
-        file_name = format_json(full_name, total, info, error, warning)
     else:
-        print("Invalid export format")
+        print("Export Error: No match Data")
         return
     
-    log_exist(file_name)
-
-def log_search_export(results, full_name):
-    if full_name.endswith(".txt"):
-        with open(full_name, "w") as f:
-            for line in results:
-                f.write(line)
-        log_exist(full_name)
-
-    elif full_name.endswith(".csv"):
-        with open(full_name, "w") as f:
-            f.write("Matched Lines\n")
-            for line in results:
-                f.write(f"\"{line.strip()}\"\n")
-        log_exist(full_name)
-
-    elif full_name.endswith(".json"):
-        import json
-        with open(full_name, "w") as f:
-            json.dump(results, f, indent=4)
-        log_exist(full_name)
-
-    else:
-        print("Invalid export format")
+    log_exist(name)
