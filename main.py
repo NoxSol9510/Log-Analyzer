@@ -45,17 +45,25 @@ while True:
             for item in list_match:
                 print(item, end="")  # avoid double newlines
 
-            if input("Do you want to export these results? (y/n): ").lower() == "y":
+            if input("\nDo you want to export these results? (y/n): ").lower() == "y":
                 file_ext = file_type()
-                if file_ext:  # user didn't cancel
+                if file_ext:
                     file_name = input("Enter a file name: ") or "search_results"
                     full_name = f"{file_name}.{file_ext}"
-                    log_search_export(list_match, full_name)
+                    log_export(list_match, full_name)
 
         
     # export file
     elif choice == '3':
         path = file_path()
+        total, info, error, warning = log_analysis(path)
+
+        data = {
+            "Total Log": total,
+            "Info": info,
+            "Error": error,
+            "Warning": warning
+        }
 
         file_ext = file_type()
         if not file_ext:
@@ -63,7 +71,7 @@ while True:
         else:
             file_name = input("Enter file name: ") or "report"
             full_name = f"{file_name}.{file_ext}"  
-            log_export(path, full_name) 
+            log_export(data, full_name) 
 
     elif choice == '0':
         print("Exiting the program.")
