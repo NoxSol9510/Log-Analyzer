@@ -1,9 +1,8 @@
 from log_utility import *
 
 def file_path():
-    #temp for open file explorer
-    #TEMP path to log file
-    return r"Sample Log\samaple_log1.txt"
+    #change path to log file
+    return r"Sample Log\sample_log1.txt"
 
 while True:
     print("\nMain Menu:")
