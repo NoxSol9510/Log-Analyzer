@@ -1,0 +1,5 @@
+2025-08-21 08:00:00 info Service started
+2025-08-21 08:05:10 WARNING High memory usage
+2025-08-21 08:06:55 error File not found
+2025-08-21 08:07:20 Info Backup completed
+2025-08-21 08:09:43 wArNiNg Network latency

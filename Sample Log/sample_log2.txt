@@ -1,0 +1,5 @@
+2025-08-18 10:00:01 INFO User login successful
+2025-08-18 10:05:12 WARNING Disk usage at 85%
+2025-08-18 10:06:45 ERROR Failed to connect to database
+2025-08-18 10:07:03 INFO Data synced with server
+2025-08-18 10:09:27 ERROR Invalid user credentials
